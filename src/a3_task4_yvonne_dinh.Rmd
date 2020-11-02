@@ -1,0 +1,54 @@
+---
+title: "a3_task4_yvonne_dinh"
+author: "Yvonne Dinh"
+date: "11/1/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(lubridate)
+library(here)
+library(janitor)
+```
+
+```{r}
+#read in data
+urchins=read.csv(here("data","urchins.csv")) %>% 
+  clean_names()
+```
+
+##Comparing the mean size of purple urchins in control or annual sections of Naples Reef in January 2010
+```{r}
+#wrangle data to get purple urchin data for Naples in Jan 2010
+napels=urchins %>% 
+  filter(site=="NAPL") %>% 
+  mutate(date = mdy(date)) %>% #convert the date to class "Date" 
+  mutate(year= year(date)) %>% 
+  mutate(month=month(date)) %>% 
+  filter(year=="2010") %>% 
+  filter(month=="1") %>% 
+  filter(common_name=="Purple Urchin")
+
+#histogram of the data!
+ggplot(napels, aes(x=size))+
+  geom_histogram()+
+  labs(x="Urchin Diameter, cm", title= "Histogram of Purple Urchin Sizes in Naples Reef")+
+  facet_wrap(~treatment)
+
+#qqplot of the data!
+ggplot(napels, aes(sample=size))+
+  geom_qq()+
+  facet_wrap(~treatment)
+```
+
+#####Write 1 - 2 sentences describing your main takeaways about the distribution of urchin sizes for each group.
+
+```{r}
+#descriptive statistics table for both groups
+```
+
+
+
