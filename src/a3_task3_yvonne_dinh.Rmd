@@ -51,7 +51,7 @@ urchin_stats
 purple_urchins=urchins %>% 
   filter(common_name=="Purple Urchin") %>% 
   mutate(date = mdy(date)) %>% #convert the date to class "Date" 
-  mutate(year= year(date)) %>% #create a new column that contains year
+  mutate(year= year(date)) %>% #create a new column that contains year 
   mutate(site_full = case_when( #create a new column with full site names
     site=="NAPL" ~ "Naples Reef",
     site=="AQUE" ~ "Arroyo Quernardo Reef",
@@ -62,12 +62,13 @@ purple_urchins=urchins %>%
 #create a summary table containing the total number of purple urchins observed by site and year
 purp_urch_site_year <- purple_urchins %>% 
   group_by(site, year) %>% 
-  summarize(urch_count = length(year))
+  summarize(count = n())
 purp_urch_site_year
 
 #create an exploratory graph of counts of purple urchins recorded at each site
 ggplot(purp_urch_site_year, aes(x=year, y=urch_count, color=site))+
-         geom_line()
+        geom_line()+
+        scale_x_continuous
 #what's up w the year decimals
 ```
 

@@ -12,6 +12,7 @@ library(tidyverse)
 library(lubridate)
 library(here)
 library(janitor)
+library(kableExtra)
 ```
 
 ```{r}
@@ -23,7 +24,7 @@ urchins=read.csv(here("data","urchins.csv")) %>%
 ##Comparing the mean size of purple urchins in control or annual sections of Naples Reef in January 2010
 ```{r}
 #wrangle data to get purple urchin data for Naples in Jan 2010
-napels=urchins %>% 
+naples=urchins %>% 
   filter(site=="NAPL") %>% 
   mutate(date = mdy(date)) %>% #convert the date to class "Date" 
   mutate(year= year(date)) %>% 
@@ -33,22 +34,44 @@ napels=urchins %>%
   filter(common_name=="Purple Urchin")
 
 #histogram of the data!
-ggplot(napels, aes(x=size))+
+ggplot(naples, aes(x=size))+
   geom_histogram()+
   labs(x="Urchin Diameter, cm", title= "Histogram of Purple Urchin Sizes in Naples Reef")+
   facet_wrap(~treatment)
 
 #qqplot of the data!
-ggplot(napels, aes(sample=size))+
+ggplot(naples, aes(sample=size))+
   geom_qq()+
   facet_wrap(~treatment)
 ```
 
-#####Write 1 - 2 sentences describing your main takeaways about the distribution of urchin sizes for each group.
+#Write 1 - 2 sentences describing your main takeaways about the distribution of urchin sizes for each group.
 
 ```{r}
 #descriptive statistics table for both groups
+naples_table=naples %>% 
+  group_by(treatment) %>% 
+  summarize(naples_mean = mean(size),
+            naples_median = median(size),
+            naples_sd=sd(size),
+            naples_n=n())
+
+naples_table
+
+#preform a t-test to compare means between the two groups
+annual_purple=naples %>% 
+  filter(treatment == "ANNUAL") %>% 
+  pull(size)
+
+control_purple=naples %>% 
+  filter(treatment == "CONTROL") %>% 
+  pull(size)
+
+t.test(x=annual_purple, control_purple)
 ```
 
+# In text below your t-test code and output, write a comprehensive statement (2 - 3 sentences) comparing the means that provides meaningful discussion about the means difference beyond (but also including) the p-value, possibly including the actual means and standard deviations for each group, and the actual difference and / or % difference in means.
+
+# In a final sentence, write the meaning of the p-value that you found in the t-test above. 
 
 
