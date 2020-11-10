@@ -5,7 +5,7 @@ date: "11/1/2020"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
+```{r, echo=TRUE, message=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
@@ -15,7 +15,7 @@ library(janitor)
 library(kableExtra)
 ```
 
-```{r}
+```{r, echo=TRUE, message=FALSE, warning=FALSE}
 #read in data
 urchins=read.csv(here("data","urchins.csv")) %>% 
   clean_names()
@@ -45,7 +45,8 @@ ggplot(naples, aes(sample=size))+
   facet_wrap(~treatment)
 ```
 
-#Write 1 - 2 sentences describing your main takeaways about the distribution of urchin sizes for each group.
+Considering the histogram and qqplot above, the Annual group of Purple Urchins has a slightly larger distribution than the Control group. The spread is a bit wider in the Annual group. 
+
 
 ```{r, echo=TRUE, message=FALSE, warning=FALSE}
 #descriptive statistics table for both groups
@@ -55,8 +56,11 @@ naples_table=naples %>%
             naples_median = median(size),
             naples_sd=sd(size),
             naples_n=n())
-
 naples_table
+
+#actual and percent difference calculations
+actual_diff=(abs(3.91667-3.725806))
+percent_diff=actual_diff/((4.469797+6.776489)/2)*100
 
 #preform a t-test to compare means between the two groups
 annual_purple=naples %>% 
@@ -71,7 +75,9 @@ t.test(x=annual_purple, control_purple)
 ```
 
 # In text below your t-test code and output, write a comprehensive statement (2 - 3 sentences) comparing the means that provides meaningful discussion about the means difference beyond (but also including) the p-value, possibly including the actual means and standard deviations for each group, and the actual difference and / or % difference in means.
+The mean sizes for the Annual and Control group are 3.92 cm and 3.73 cm, respectively, giving a mean difference of 0.16 cm. The percent difference in means is 3.39%. The standard deviation of the Annual and Control values are 0.966 and 0.867, respectively, indicating that the Annual group has slightly higher variance than the Control group. 
+
 
 # In a final sentence, write the meaning of the p-value that you found in the t-test above. 
-
+The p-value for the t-test above is 0.2536, meaning that there is a 25.36% probability that the two sample means are at least as different as what was observed (or 3.92-3.76 = 0.16cm). 
 
