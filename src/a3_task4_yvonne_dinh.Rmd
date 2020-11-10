@@ -73,11 +73,7 @@ control_purple=naples %>%
 
 t.test(x=annual_purple, control_purple)
 ```
-
-# In text below your t-test code and output, write a comprehensive statement (2 - 3 sentences) comparing the means that provides meaningful discussion about the means difference beyond (but also including) the p-value, possibly including the actual means and standard deviations for each group, and the actual difference and / or % difference in means.
 The mean sizes for the Annual and Control group are 3.92 cm and 3.73 cm, respectively, giving a mean difference of 0.16 cm. The percent difference in means is 3.39%. The standard deviation of the Annual and Control values are 0.966 and 0.867, respectively, indicating that the Annual group has slightly higher variance than the Control group. 
 
-
-# In a final sentence, write the meaning of the p-value that you found in the t-test above. 
 The p-value for the t-test above is 0.2536, meaning that there is a 25.36% probability that the two sample means are at least as different as what was observed (or 3.92-3.76 = 0.16cm). 
 
