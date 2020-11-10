@@ -22,7 +22,7 @@ urchins=read.csv(here("data","urchins.csv")) %>%
 ```
 
 ##Comparing the mean size of purple urchins in control or annual sections of Naples Reef in January 2010
-```{r}
+```{r, echo=TRUE, message=FALSE, warning=FALSE}
 #wrangle data to get purple urchin data for Naples in Jan 2010
 naples=urchins %>% 
   filter(site=="NAPL") %>% 
@@ -47,7 +47,7 @@ ggplot(naples, aes(sample=size))+
 
 #Write 1 - 2 sentences describing your main takeaways about the distribution of urchin sizes for each group.
 
-```{r}
+```{r, echo=TRUE, message=FALSE, warning=FALSE}
 #descriptive statistics table for both groups
 naples_table=naples %>% 
   group_by(treatment) %>% 
